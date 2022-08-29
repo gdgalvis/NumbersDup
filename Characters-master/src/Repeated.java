@@ -21,7 +21,7 @@ public class Repeated {
         int counter=0;
         while(notRepeated){
             int number = array[counter];
-            if (myVector.contains(array[counter])){
+            if (container(number)){
                 notRepeated = false;
             }
             else{
@@ -29,5 +29,16 @@ public class Repeated {
                 counter++;
             }
         }
+    }
+
+    // Container for a raw process more easy to analize
+    public static boolean container(int number){
+        // Recorrage the vector
+        for (int i = 0; i < myVector.size(); i++) {
+            if (myVector.get(i) == number) {
+                return true;
+            }
+        }
+        return false;
     }
 }
