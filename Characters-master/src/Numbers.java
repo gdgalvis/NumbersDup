@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner; 
 import java.lang.Math;
+import java.util.Vector;
 
 public class Numbers {
 /*
@@ -41,6 +42,7 @@ public class Numbers {
  * [5] www.javatpoint.com/throw-keyword
  *
  */
+	public static int variable= (int) Math.pow(2, 21);
 	public static int contador = 0;
 	public static int contadorGlobal= 0;
 	public static long[] times = new long[5];
@@ -50,8 +52,10 @@ public class Numbers {
 	public static int[] listOfComp = new int[17];
 	public static Reader read = new Reader();
 	public static long[] sizes = new long[17];
+	public static int CC=0;
+	public static Vector <Integer> myVector = new Vector<Integer>();
 
-	public static void main (String[] args)
+	public static void main (String[] args) throws Exception
 	{
 		fillTheArray();
 		// Create an empty for
@@ -87,7 +91,7 @@ public class Numbers {
 		try
 		{
 			// defines the filename
-			String fname = ("parameter.txt");
+			String fname = ("Dupli.txt");
 			// creates a new File object
 			File f = new File (fname);
 			f.createNewFile();
@@ -111,7 +115,7 @@ public class Numbers {
 		try
 		{
 
-			String filename = ("parameter.txt");
+			String filename = ("Dupli.txt");
 
 			PrintWriter out = new PrintWriter (filename);
 			int count = 0;
@@ -134,7 +138,43 @@ public class Numbers {
 		return;
 	}
 
+	
+	// Main method for verifying the repeated in an array
+	private static void repeatedask(int[] array) throws Exception {
+		long start = System.nanoTime();
+		boolean notRepeated = true;
+		int counter=0;
 
+		CC=0;
+		while(notRepeated){
+			int number = array[counter];
+			if (container(number)){
+				notRepeated = false;
+			}
+			else{
+				myVector.add(number);
+				counter++;
+			}
+		}
+		long end = System.nanoTime();
+		long time = end - start;
+		times[contador]=time;
+		contador++;
+	}
+	
+	// Container for a raw process more easy to analize
+	public static boolean container(int number){
+		// Recorrage the vector
+		for (int i = 0; i < myVector.size(); i++) {
+			CC++;
+			comps[contador]=CC;
+			if (myVector.get(i) == number) {
+	
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 
@@ -151,11 +191,11 @@ public class Numbers {
 	}
 
 	public static void fillTheArray(){
-		int contador = 0;
+		int contador1 = 0;
 		for (int i = 16; i < variable; i=i*2)
         {
-			sizes[contador] = i;
-			contador++;
+			sizes[contador1] = i;
+			contador1++;
 		}
 	}
 	
@@ -188,11 +228,11 @@ public class Numbers {
 			}
 		}
 	}
-	public static int variable= (int) Math.pow(2, 21);
+	
 
 	
 
-	public static void starter(int N){
+	public static void starter(int N) throws Exception{
 		for (int j = 0; j < 5; j++){
 			create();	// creates a file
 			write(N);	// writes data to the file
@@ -234,32 +274,7 @@ public class Numbers {
     }
     // Method for print the repeated numbers between two arrays
 
-    public static void storeArray(int[] array1, int[] array2, int[] counter)
-    {
-		
-		long start = System.nanoTime();
-		int contador_de_ceros = 0;
-		contComp=0;
-        for (int i = 0; i < array1.length; i++){
-			if (array1[i]==0){
-				contador_de_ceros++;
-			}
-			if (contador_de_ceros == 2){
-				break;
-			}
-            for (int j = 0; j < array2.length; j++){	
-				contComp++;
-                if (array1[i] == array2[j]){
-                    counter[i]++;
-                }
-            }
-        }
-		long end = System.nanoTime();
-		long time = end - start;
-		times[contador] = time;
-		comps[contador] = contComp;
-		contador++;
-	}
+    
     
 
 // 
@@ -274,7 +289,7 @@ public class Numbers {
 		try
 		{
 			// defines the filename
-			String fname = ("data.txt");
+			String fname = ("datadupli.txt");
 			// creates a new File object
 			File f = new File (fname);
 			f.createNewFile();
@@ -297,7 +312,7 @@ public class Numbers {
 		try
 		{
 			// defines the filename
-			String filename = ("data.txt");
+			String filename = ("datadupli.txt");
 			// creates new PrintWriter object for writing file
 			PrintWriter out = new PrintWriter (filename);
 
@@ -322,7 +337,7 @@ public class Numbers {
 	// reads the file contents and prints them to the console
 	{
 		// defines the filename
-		String filename = ("data.txt");
+		String filename = ("datadupli.txt");
 		// creates a File object
 		File f = new File (filename);
 		try
@@ -343,10 +358,10 @@ public class Numbers {
 	}
 
 
-	private static void store (int N)
+	private static void store (int N) throws Exception
 	// stores the file contents into an array and prints the array
 	{
-		String filename = "data.txt";
+		String filename = "datadupli.txt";
 		File f = new File (filename);
 
 		try
@@ -367,7 +382,7 @@ public class Numbers {
 			int[] counter = new int[N];
 			int[] array = new int[N];
             createArray(array, list);
-            storeArray(array, list, counter);
+            repeatedask(list);
 			clearFile();
             // printArray(array, counter);
 			in.close();	// closes the input stream
@@ -420,7 +435,7 @@ public class Numbers {
 
     try{
 
-    FileWriter fw = new FileWriter("data.txt", false);
+    FileWriter fw = new FileWriter("datadupli.txt", false);
 
     PrintWriter pw = new PrintWriter(fw, false);
 

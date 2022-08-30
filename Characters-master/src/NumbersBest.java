@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner; 
 import java.lang.Math;
+import java.util.Vector;
 
 public class NumbersBest {
 /*
@@ -49,8 +50,9 @@ public class NumbersBest {
 	public static int[] listOfComp = new int[17];
 	public static Reader read = new Reader();
 	public static long[] sizes = new long[17];
+	public static Vector <Integer> myVector = new Vector<Integer>();
 
-	public static void main (String[] args)
+	public static void main (String[] args) throws Exception
 	{
 		fillTheArray();
 		// Create an empty for
@@ -83,7 +85,7 @@ public class NumbersBest {
 		try
 		{
 			// defines the filename
-			String fname = ("parameterBest.txt");
+			String fname = ("DupliBest.txt");
 			// creates a new File object
 			File f = new File (fname);
 			f.createNewFile();
@@ -107,7 +109,7 @@ public class NumbersBest {
 		try
 		{
 
-			String filename = ("parameterBest.txt");
+			String filename = ("DupliBest.txt");
 
 			PrintWriter out = new PrintWriter (filename);
 			int count = 0;
@@ -135,8 +137,41 @@ public class NumbersBest {
 
 
 
+public static int CC=0;
+// Main method for verifying the repeated in an array
+private static void repeatedask(int[] array) throws Exception {
+	long start = System.nanoTime();
+	boolean notRepeated = true;
+	int counter=0;
+	CC=0;
+	while(notRepeated){
+		int number = array[counter];
+		if (container(number)){
+			notRepeated = false;
+		}
+		else{
+			myVector.add(number);
+			counter++;
+		}
+	}
+	long end = System.nanoTime();
+	long time = end - start;
+	listOfTimes[contadorGlobal]=time;
+	contadorGlobal++;
+}
 
-	
+// Container for a raw process more easy to analize
+public static boolean container(int number){
+	// Recorrage the vector
+	for (int i = 0; i < myVector.size(); i++) {
+		CC++;
+		listOfComp[contadorGlobal]=CC;
+		if (myVector.get(i) == number) {
+            return true;
+		}
+	}
+	return false;
+}
 
 
 	public static void fillTheArray(){
@@ -181,7 +216,7 @@ public class NumbersBest {
 
 	
 
-	public static void starter(int N){
+	public static void starter(int N) throws Exception{
 		create();	// creates a file
 		write(N);	// writes data to the file
 		read();		// reads data in the file
@@ -208,45 +243,18 @@ public class NumbersBest {
     }
 
     // Create a public method that prints an array while it hasn't zero as value
-    public static void printArray(int[] array, int[] counter)
+    public static void printArray(int[] array, int[] CC)
     {
         for (int i = 0; i < array.length; i++)
         {
-            if (counter[i] != 0)
+            if (CC[i] != 0)
             {
-                System.out.println(array[i]+" appears "+counter[i]+" times");
+                System.out.println(array[i]+" appears "+CC[i]+" times");
             }
         }
     }
     // Method for print the repeated numbers between two arrays
 
-    public static void storeArray(int[] array1, int[] array2, int[] counter)
-    {
-		
-		long start = System.nanoTime();
-		int contador_de_ceros = 1;
-		contComp=0;
-        for (int i = 0; i < array1.length; i++){
-			if (array1[i]==0){
-				contador_de_ceros++;
-			}
-			if (contador_de_ceros == 2){
-				break;
-			}
-            for (int j = 0; j < array2.length; j++){	
-				contComp++;
-                if (array1[i] == array2[j]){
-                    counter[i]++;
-                }
-            }
-        }
-		long end = System.nanoTime();
-		long time = end - start;
-		listOfTimes[contadorGlobal]=time;
-		listOfComp[contadorGlobal]=contComp;
-		contadorGlobal++;
-	}
-    
 
 // 
 // 
@@ -260,7 +268,7 @@ public class NumbersBest {
 		try
 		{
 			// defines the filename
-			String fname = ("dataBest.txt");
+			String fname = ("dataDupliBest.txt");
 			// creates a new File object
 			File f = new File (fname);
 			f.createNewFile();
@@ -283,7 +291,7 @@ public class NumbersBest {
 		try
 		{
 			// defines the filename
-			String filename = ("dataBest.txt");
+			String filename = ("dataDupliBest.txt");
 			// creates new PrintWriter object for writing file
 			PrintWriter out = new PrintWriter (filename);
 
@@ -308,7 +316,7 @@ public class NumbersBest {
 	// reads the file contents and prints them to the console
 	{
 		// defines the filename
-		String filename = ("dataBest.txt");
+		String filename = ("dataDupliBest.txt");
 		// creates a File object
 		File f = new File (filename);
 		try
@@ -329,10 +337,10 @@ public class NumbersBest {
 	}
 
 
-	private static void store (int N)
+	private static void store (int N) throws Exception
 	// stores the file contents into an array and prints the array
 	{
-		String filename = "dataBest.txt";
+		String filename = "dataDupliBest.txt";
 		File f = new File (filename);
 
 		try
@@ -350,12 +358,11 @@ public class NumbersBest {
 				list[count] = in.nextInt();
 				++count;
 			}
-			int[] counter = new int[N];
+			int[] CC = new int[N];
 			int[] array = new int[N];
             createArray(array, list);
-            storeArray(array, list, counter);
+			repeatedask(list);
 			clearFile();
-            // printArray(array, counter);
 			in.close();	// closes the input stream
 
 		}
@@ -406,7 +413,7 @@ public class NumbersBest {
 
     try{
 
-    FileWriter fw = new FileWriter("dataBest.txt", false);
+    FileWriter fw = new FileWriter("dataDupliBest.txt", false);
 
     PrintWriter pw = new PrintWriter(fw, false);
 
